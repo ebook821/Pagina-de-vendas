@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Do Moleque ao Homem</title>
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Fonte e cor base */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #000;
+      color: white;
+      scroll-behavior: smooth;
+      padding-top: 48px; /* Espaço para o header fixo */
+    }
+
+    /* Vídeo de fundo e overlay */
+    .video-bg {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #bg-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      z-index: -1;
+    }
+
+    .overlay {
+      background: rgba(0, 0, 0, 0.75);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      flex-direction: column;
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    /* Typewriter no título */
+    .typewriter {
+      font-size: 2.8rem;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid #fff;
+      animation: typing 4s steps(30), blink 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    @keyframes blink {
+      50% { border-color: transparent }
+    }
+
+    /* Botão CTA */
+    .cta-btn {
+      margin-top: 30px;
+      background-color: #e50914;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+      display: inline-block;
+      cursor: pointer;
+    }
+    .cta-btn:hover {
+      background-color: #ff3333;
+      transform: scale(1.05);
+    }
+
+    /* Seções e textos */
+    section {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .impacto h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    .impacto p, .impacto blockquote {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .beneficios {
+      list-style: none;
+      padding: 0;
+      font-size: 1.1rem;
+    }
+    .beneficios li {
+      margin: 10px 0;
+    }
+
+    /* Frases estilo bloco destacado */
+    .quote-section {
+      max-width: 700px;
+      margin: 60px auto;
+      padding: 30px 40px;
+      border-left: 6px solid #e50914;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: #ddd;
+      background-color: #111;
+      border-radius: 8px;
+      box-shadow: 0 0 20px #e5091440;
+    }
+
+    .quote-section.alt {
+      background-color: #222;
+      border-left-color: #ff3333;
+    }
+
+    /* Faixa fixa com contador no topo */
+    .fixed-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #e50914;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      padding: 12px 0;
+      font-size: 1.2rem;
+      box-shadow: 0 2px 10px rgba(229, 9, 20, 0.7);
+      z-index: 10000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    footer {
+      background-color: #111;
+      color: #888;
+      text-align: center;
+      padding: 30px 15px;
+      margin-top: 80px;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+    .conteudo {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    footer p:not(:last-child) {
+      margin-bottom: 8px;
+    }
+
+    .ebook-capa-section {
+      display: flex;
+      justify-content: center;
+      margin: 40px 0 60px;
+    }
+
+    .ebook-capa-section img {
+      width: 100%;
+      max-width: 320px;
+      border-radius: 16px;
+      box-shadow: 0 0 30px #e5091477;
+      border: 4px solid #e50914;
+      transition: transform 0.3s ease;
+      cursor: default;
+      margin-top: 100px;
+    }
+
+    .ebook-capa-section img:hover {
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 400px) {
+      .ebook-capa-section {
+        margin: 10px 0 10px;
+      }
+
+      .ebook-capa-section img {
+        max-width: 260px;
+        margin-top: 60px;
+      }
+    }
+
+    /* Botão flutuante */
+    .botao-flutuante {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #e50914;
+      padding: 12px 20px;
+      border-radius: 30px;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 0 20px #e50914aa;
+      z-index: 999;
+      animation: pulse 3s infinite;
+    }
+
+    /* Espaço e borda para separar promo das frases */
+    .promo-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin: 60px auto;
+      max-width: 500px;
+      padding: 0 20px;
+    }
+
+    .promo-banner {
+      background: linear-gradient(135deg, #e50914, #b30000);
+      padding: 40px 35px;
+      border-radius: 16px;
+      box-shadow: 0 0 10px #e5091466;
+      flex: 1 1 350px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #fff;
+      user-select: none;
+      position: relative;
+      transition: transform 0.3s ease;
+      font-size: 50px;
+      font-family: 'Times New Roman', Times, serif;
+      justify-content: center;
+      text-align: center;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .promo-banner:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 50px #ff2a2aaa;
+    }
+
+    .promo-text {
+      font-weight: 900;
+      font-size: 3.5rem;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .preco-antigo {
+      text-decoration: line-through;
+      color: #ffb3b3;
+      margin-right: 20px;
+      font-size: 2rem;
+      vertical-align: middle;
+      opacity: 0.7;
+    }
+
+    .preco-novo {
+      font-size: 4.5rem;
+      color: #ffff66;
+      vertical-align: middle;
+      text-shadow: 0 0 10px #ffff66cc;
+    }
+
+    .btn-comprar {
+      background-color: #ffff66;
+      color: #b30000;
+      border: none;
+      padding: 18px 45px;
+      font-size: 1.5rem;
+      font-weight: 900;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 0 20px #ffff66aa;
+      user-select: none;
+    }
+
+    .btn-comprar:hover {
+      background-color: #fff44d;
+      transform: scale(1.1);
+      box-shadow: 0 0 30px #ffff66dd;
+    }
+
+    .promo-urgencia {
+      margin-top: 18px;
+      font-size: 1.1rem;
+      color: #ffd700;
+      font-weight: 600;
+      text-shadow: 0 0 6px #ffcc00aa;
+      user-select: none;
+    }
+
+    .promo-image img {
+      width: 100%;
+      max-width: 180px;
+      border-radius: 16px;
+      border: 3px solid #e50914;
+      box-shadow: 0 0 12px #e5091444;
+      transition: transform 0.3s ease;
+    }
+
+    .promo-image img:hover {
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      .promo-banner {
+        box-shadow: 0 0 6px #e5091444;
+      }
+
+      .promo-image img,
+      .ebook-capa-section img {
+        box-shadow: 0 0 6px #e5091444;
+        margin: 100px;
+      }
+
+      .btn-comprar,
+      .cta-btn {
+        box-shadow: 0 0 8px #ffff6644;
+      }
+
+      .quote-section,
+      .quote-section.alt {
+        text-shadow: none;
+        box-shadow: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .typewriter {
+        font-size: 1.5rem;
+        white-space: normal;
+        border-right: none;
+        animation: none;
+      }
+
+      .hero-content {
+        padding: 0 10px;
+      }
+    }
+
+    .motivacao-texto {
+      max-width: 700px;
+      margin: 50px auto 40px;
+      padding: 20px 30px;
+      background: linear-gradient(135deg, #111 0%, #222 100%);
+      border-radius: 14px;
+      box-shadow: 0 0 25px #e5091455;
+      color: #ffff88;
+      font-weight: 700;
+      font-size: 1.3rem;
+      text-align: left;
+      line-height: 1.5;
+    }
+
+    .motivacao-texto h2 {
+      font-size: 2rem;
+      margin-bottom: 18px;
+      text-align: center;
+      color: #ffcc00;
+      text-shadow: 0 0 12px #ffcc00bb;
+    }
+
+    .motivacao-texto p {
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+
+    .motivacao-texto p::before {
+      content: '✔️';
+      font-size: 1.2rem;
+      color: #ffd700;
+      flex-shrink: 0;
+    }
+
+    .depoimentos {
+      max-width: 900px;
+      margin: 50px auto 80px;
+      padding: 0 20px 40px;
+      text-align: center;
+      color: #eee;
+    }
+
+    .depoimentos h2 {
+      font-size: 2.2rem;
+      margin-bottom: 30px;
+      color: #ffcc00;
+      text-shadow: 0 0 15px #ffcc00bb;
+    }
+
+    .depoimentos-container {
+      display: flex;
+      gap: 25px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .depoimento-card {
+      background: #111;
+      padding: 25px 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 30px #e5091444;
+      width: 280px;
+      font-style: italic;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .depoimento-card strong {
+      display: block;
+      margin-top: 18px;
+      color: #ffd700;
+      font-weight: 700;
+    }
+
+    .depoimento-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 50px #ffcc0099;
+    }
+
+    @media (max-width: 900px) {
+      .depoimentos-container {
+        justify-content: center;
+      }
+      .depoimento-card {
+        width: 90%;
+        max-width: 380px;
+      }
+    }
+
+    .gatilho-final {
+      max-width: 700px;
+      margin: 0 auto 80px;
+      padding: 40px 30px;
+      background: linear-gradient(135deg, #ff3300, #b30000);
+      border-radius: 18px;
+      box-shadow: 0 0 40px #ff3300cc;
+      text-align: center;
+      color: #fff;
+      font-weight: 900;
+      letter-spacing: 1.1px;
+      user-select: none;
+    }
+
+    .gatilho-final h2 {
+      font-size: 2.5rem;
+      margin-bottom: 25px;
+      text-shadow: 0 0 18px #fff;
+    }
+
+    .gatilho-final p {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+    }
+
+    .gatilho-final .btn-comprar {
+      font-size: 1.7rem;
+      padding: 20px 50px;
+      border-radius: 30px;
+      background-color: #ffff66;
+      color: #b30000;
+      box-shadow: 0 0 30px #ffff66cc;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .gatilho-final .btn-comprar:hover {
+      background-color: #fff44d;
+      transform: scale(1.1);
+      box-shadow: 0 0 45px #ffff66ee;
+    }
+
+    .premio-banner {
+      max-width: 340px;
+      margin: 30px auto 20px;
+      background: linear-gradient(135deg, #e50914, #b30000);
+      border-radius: 30px;
+      box-shadow: 0 0 10px #e5091466;
+      color: #fff;
+      font-weight: 900;
+      font-size: 1.4rem;
+      text-align: center;
+      padding: 18px 20px;
+      user-select: none;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      position: relative;
+      animation: pulsePremio 2.5s infinite ease-in-out;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      cursor: default;
+    }
+
+    .premio-timer {
+      font-family: 'Courier New', Courier, monospace;
+      background-color: #4b2e00;
+      color: #ffff66;
+      font-weight: 900;
+      font-size: 2.6rem;
+      padding: 8px 22px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px #ffff66cc;
+      animation: blinkTimer 1.2s infinite;
+      user-select: none;
+    }
+
+    @keyframes pulsePremio {
+      0%, 100% { box-shadow: 0 0 30px #ffb700cc; }
+      50% { box-shadow: 0 0 45px #ffd700ff; }
+    }
+
+    @keyframes blinkTimer {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* Responsivo */
+    @media (max-width: 400px) {
+      .premio-banner {
+        max-width: 90%;
+        font-size: 1.1rem;
+        padding: 14px 15px;
+      }
+      .premio-timer {
+        font-size: 2rem;
+        padding: 6px 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Timer fixo -->
+  <div class="fixed-header">
+    🚨 Oferta relâmpago termina em: <span id="timer">10:00</span>
+  </div>
+
+  <!-- Hero com vídeo -->
+  <section class="video-bg">
+    <video autoplay muted loop id="bg-video">
+      <source src="seuvideo.mp4" type="video/mp4" />
+      Seu navegador não suporta vídeo HTML5.
+    </video>
+    <div class="overlay">
+      <div class="hero-content">
+        <h1 class="typewriter">A virada começa em silêncio.</h1>
+        <a href="#motivacao" class="cta-btn">Quero me tornar o homem certo</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="motivacao-texto" id="motivacao">
+    <h2>🔥 Está pronto para a mudança? 🔥</h2>
+    <p>✅ Pare de se contentar com o que não te leva a lugar nenhum.</p>
+    <p>✅ Seja o homem que você sempre quis ser, com postura, foco e atitude.</p>
+    <p>✅ Este é o momento de se transformar de dentro para fora.</p>
+  </section>
+
+  <section class="promo-container">
+    <div class="promo-banner premio-banner">
+      <div>🔥 Oferta imperdível! 🔥</div>
+      <div class="premio-timer" id="premio-timer">10:00</div>
+      <div class="promo-text">
+        <span class="preco-antigo">R$ 197,00</span>
+        <span class="preco-novo">R$ 47,00</span>
+      </div>
+      <button class="btn-comprar" onclick="window.location.href='https://seulinkdecheckout.com'">Quero comprar agora</button>
+      <div class="promo-urgencia">Oferta termina assim que o timer zerar!</div>
+    </div>
+  </section>
+
+  <section class="impacto">
+    <h2>O que você vai conquistar em 15 dias</h2>
+    <ul class="beneficios">
+      <li>✔️ Autoestima sólida e inabalável</li>
+      <li>✔️ Postura de respeito e confiança</li>
+      <li>✔️ Aparência que impõe presença</li>
+      <li>✔️ Mentalidade de homem vencedor</li>
+      <li>✔️ Mulheres respeitando sua energia</li>
+    </ul>
+  </section>
+
+  <section class="quote-section">
+    “Não espere a mudança acontecer. Seja a mudança que seu futuro exige.” – Autor Desconhecido
+  </section>
+
+  <section class="quote-section alt">
+    “A coragem não é a ausência do medo, mas a decisão de que algo é mais importante que o medo.” – Ambrose Redmoon
+  </section>
+
+  <section class="depoimentos">
+    <h2>Depoimentos de quem já mudou</h2>
+    <div class="depoimentos-container">
+      <div class="depoimento-card">
+        “Nunca imaginei que 15 dias poderiam mudar tanto minha vida. Hoje, olho no espelho e vejo o homem que sempre quis ser.”<br />
+        <strong>– Rafael M.</strong>
+      </div>
+      <div class="depoimento-card">
+        “A virada veio silenciosa, mas com um impacto que ninguém pode negar. Recomendo para todos que querem dar um passo à frente.”<br />
+        <strong>– Carlos T.</strong>
+      </div>
+      <div class="depoimento-card">
+        “A postura, o respeito próprio e a confiança que ganhei são incomparáveis. É um investimento que vale cada centavo.”<br />
+        <strong>– Henrique S.</strong>
+      </div>
+    </div>
+  </section>
+
+  <section class="gatilho-final">
+    <h2>Não perca mais tempo!</h2>
+    <p>Este é o único momento para agir e garantir sua transformação completa.</p>
+    <p><button class="btn-comprar" onclick="window.location.href='https://seulinkdecheckout.com'">Quero garantir meu acesso</button></p>
+  </section>
+
+  <footer>
+    <p>© 2025 Do Moleque ao Homem</p>
+    <p>Transformando homens todos os dias</p>
+  </footer>
+
+  <!-- Canvas dos fogos -->
+  <canvas id="fogos-canvas" style="position: fixed; top:0; left:0; width: 100%; height: 100%; pointer-events:none; display:none; z-index: 9999;"></canvas>
+
+  <script>
+    const timer = document.getElementById('timer');
+    const premioTimer = document.getElementById('premio-timer');
+    let tempo = 10 * 60; // 10 minutos em segundos
+
+    function formatarTempo(segundos) {
+      const min = String(Math.floor(segundos / 60)).padStart(2, '0');
+      const seg = String(segundos % 60).padStart(2, '0');
+      return `${min}:${seg}`;
+    }
+
+    function tempoAcabou() {
+      timer.textContent = '00:00';
+      premioTimer.textContent = '00:00';
+
+      [timer, premioTimer].forEach(el => {
+        el.style.color = '#ff0000';
+        el.style.textShadow = '0 0 20px #ff0000';
+      });
+
+      alert('⏰ Tempo esgotado! Aproveite a oferta enquanto dura!');
+      // Exemplo: redirecionamento
+      // window.location.href = 'https://seulinkdecheckout.com';
+    }
+
+    function atualizarEstilo(tempoRestante) {
+      let cor, peso, sombra;
+
+      if (tempoRestante <= 30) {
+        cor = '#ff4d4d';
+        peso = '900';
+        sombra = '0 0 12px #ff4d4d';
+      } else if (tempoRestante <= 120) {
+        cor = '#ffcc00';
+        peso = '700';
+        sombra = '0 0 8px #ffcc00';
+      } else {
+        cor = '#fff';
+        peso = '400';
+        sombra = 'none';
+      }
+
+      [timer, premioTimer].forEach(el => {
+        el.style.color = cor;
+        el.style.fontWeight = peso;
+        el.style.textShadow = sombra;
+      });
+    }
+
+    const intervalo = setInterval(() => {
+      if (tempo < 0) {
+        clearInterval(intervalo);
+        tempoAcabou();
+        return;
+      }
+      const textoTempo = formatarTempo(tempo);
+      timer.textContent = textoTempo;
+      premioTimer.textContent = textoTempo;
+      atualizarEstilo(tempo);
+      tempo--;
+    }, 1000);
+
+    const canvas = document.getElementById('fogos-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+    let animationFrameId;
+
+    function ajustarCanvas() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width * devicePixelRatio;
+      canvas.height = height * devicePixelRatio;
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    }
+
+    window.addEventListener('resize', ajustarCanvas);
+    ajustarCanvas();
+
+    function criarParticulas(x, y) {
+      const cores = ['#ff4d4d', '#ffd700', '#ff9900', '#ffffff'];
+      for (let i = 0; i < 100; i++) {
+        particles.push({
+          x,
+          y,
+          velX: (Math.random() - 0.5) * 8,
+          velY: (Math.random() - 1.5) * 8,
+          alpha: 1,
+          color: cores[Math.floor(Math.random() * cores.length)],
+          size: Math.random() * 3 + 1,
+          gravity: 0.1,
+        });
+      }
+    }
+
+    function animar() {
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.velX;
+        p.y += p.velY;
+        p.velY += p.gravity;
+        p.alpha -= 0.02;
+
+        if (p.alpha <= 0) {
+          particles.splice(i, 1);
+        } else {
+          ctx.globalAlpha = p.alpha;
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      if (particles.length > 0) {
+        animationFrameId = requestAnimationFrame(animar);
+      } else {
+        canvas.style.display = 'none';
+      }
+    }
+
+    function dispararFogos() {
+      if (canvas.style.display === 'block') return;
+      canvas.style.display = 'block';
+      criarParticulas(width / 2, height / 2);
+      animar();
+    }
+
+    const premioBanner = document.querySelector('.premio-banner');
+    let premiacaoDisparada = false;
+
+    window.addEventListener('scroll', () => {
+      if (!premiacaoDisparada) {
+        const rect = premioBanner.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          premiacaoDisparada = true;
+          dispararFogos();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
